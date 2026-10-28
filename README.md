@@ -19,6 +19,7 @@ Experience SentinelEdge live in action:
 | :--- | :--- | :--- |
 | **🚀 Production SOC Dashboard** | **[sentinel-edge-static.vercel.app](https://sentinel-edge-static.vercel.app/)** | Hosted on Vercel Edge CDN with interactive 3D Campus map |
 | **⚡ Edge Engine & WebSocket API** | **[sentinel-edge.onrender.com](https://sentinel-edge.onrender.com/)** | Hosted on Render (FastAPI + WebSocket + AI Engine) |
+| **🏆 Hackathon Evaluator Guide** | **[HACKATHON_INSTALLATION_GUIDE.md](HACKATHON_INSTALLATION_GUIDE.md)** | 60-second setup, verification checklist & pitch script |
 | **📦 GitHub Repository** | **[chandrakanthGupta/sentinel-edge](https://github.com/chandrakanthGupta/sentinel-edge)** | Complete source code, Docker configs & documentation |
 
 ---
