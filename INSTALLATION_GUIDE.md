@@ -1,6 +1,6 @@
-# 🏆 SENTINEL EDGE: HACKATHON EVALUATOR & INSTALLATION PLAYBOOK
+# 🛠️ SENTINEL EDGE: INSTALLATION GUIDE
 
-> **Designed for Hackathon Judges, Technical Evaluators & Security Researchers**  
+> **Complete Setup, Deployment & Verification Playbook (Hackathon Perspective)**  
 > *Target Setup Time: Under 60 Seconds | Hardware Footprint: < 35 MB RAM | Zero External Server Dependencies*
 
 [![Live Demo](https://img.shields.io/badge/Live%20Demo-Vercel%20Edge%20CDN-black.svg?logo=vercel)](https://sentinel-edge-static.vercel.app/)
