@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  sentinel-edge:
+    build: .
+    container_name: sentinel-edge
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      - HOST=0.0.0.0
+      - PORT=8000
+    volumes:
+      - ./tier4_response/sentinel_incidents.db:/app/tier4_response/sentinel_incidents.db

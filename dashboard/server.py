@@ -216,5 +216,7 @@ app.mount("/", StaticFiles(directory=static_dir, html=True), name="static")
 
 if __name__ == "__main__":
     import uvicorn
-    print("[SentinelEdge] Launching Dashboard on http://127.0.0.1:8000")
-    uvicorn.run(app, host="127.0.0.1", port=8000, log_level="warning")
+    host = os.environ.get("HOST", "0.0.0.0")
+    port = int(os.environ.get("PORT", "8000"))
+    print(f"[SentinelEdge] Launching Dashboard on http://{host}:{port}")
+    uvicorn.run(app, host=host, port=port, log_level="warning")

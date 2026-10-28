@@ -18,7 +18,9 @@ if __name__ == "__main__":
     print("\n[+] Edge Router Tap Interface: ACTIVE")
     print("[+] SQLite WAL Forensic Database: ACTIVE")
     print("[+] Realistic Traffic & Threat Simulator: READY")
-    print("\n>>> Launching SentinelEdge SOC Dashboard on http://127.0.0.1:8000 <<<\n")
+    host = os.environ.get("HOST", "0.0.0.0")
+    port = int(os.environ.get("PORT", "8000"))
+    print(f"\n>>> Launching SentinelEdge SOC Dashboard on http://{host}:{port} <<<\n")
 
     from dashboard.server import app
-    uvicorn.run(app, host="127.0.0.1", port=8000, log_level="warning")
+    uvicorn.run(app, host=host, port=port, log_level="warning")

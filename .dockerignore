@@ -1,0 +1,14 @@
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.git
+.gitignore
+node_modules
+test123.0/node_modules
+test123.0/dist
+.env
+.vscode
+.idea
+*.db-shm
+*.db-wal
