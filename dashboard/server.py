@@ -13,6 +13,7 @@ from typing import Dict, Any, List, Set
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect, HTTPException
 from fastapi.responses import HTMLResponse, FileResponse, Response
 from fastapi.staticfiles import StaticFiles
+from fastapi.middleware.cors import CORSMiddleware
 
 # Ensure project root is in sys.path
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -23,6 +24,15 @@ from sentinel_core import SentinelEdgeCore
 from simulation.traffic_generator import ContinuousTrafficGenerator
 
 app = FastAPI(title="SentinelEdge Dashboard")
+
+# Enable CORS for external frontends (e.g., Vercel, localhost)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # Initialize Core Engine & Traffic Generator
 sentinel = SentinelEdgeCore()

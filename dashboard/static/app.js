@@ -79,10 +79,19 @@ function setupCampusScrollCamera() {
 mountDashboardLayout();
 setupCampusScrollCamera();
 
+// Resolve Backend Host: supports Render all-in-one OR Vercel (frontend) + Render (backend)
+const urlParams = new URLSearchParams(window.location.search);
+const customBackend = urlParams.get("backend") || window.SENTINEL_BACKEND || localStorage.getItem("SENTINEL_BACKEND");
+if (urlParams.get("backend")) {
+    localStorage.setItem("SENTINEL_BACKEND", urlParams.get("backend"));
+}
+const BACKEND_HOST = customBackend ? customBackend.replace(/^https?:\/\//, '').replace(/\/$/, '') : window.location.host;
+const API_BASE = customBackend ? `https://${BACKEND_HOST}` : "";
+
 // Connect to Real-time WebSocket
 function connectWebSocket() {
-    const protocol = window.location.protocol === "https:" ? "wss:" : "ws:";
-    const wsUrl = `${protocol}//${window.location.host}/ws`;
+    const protocol = (window.location.protocol === "https:" || customBackend) ? "wss:" : "ws:";
+    const wsUrl = `${protocol}//${BACKEND_HOST}/ws`;
     
     ws = new WebSocket(wsUrl);
 
@@ -240,7 +249,7 @@ function updatePipelineSequence(data) {
 // --- Dynamic Blocklist Management ---
 async function syncBlocklistFromServer() {
     try {
-        const res = await fetch("/api/blocklist");
+        const res = await fetch(`${API_BASE}/api/blocklist`);
         activeBlocklist = await res.json();
         renderBlocklist();
     } catch (e) {
@@ -314,7 +323,7 @@ countdownInterval = setInterval(() => {
 
 async function unblockIp(ip) {
     try {
-        await fetch(`/api/unblock/${ip}`, { method: "POST" });
+        await fetch(`${API_BASE}/api/unblock/${ip}`, { method: "POST" });
         activeBlocklist = activeBlocklist.filter(item => item.ip !== ip);
         renderBlocklist();
     } catch (e) {
@@ -720,7 +729,7 @@ function inspectIncident(id, src, dst, nClass, conf) {
     const details = document.getElementById("modal-details");
     const pcapBtn = document.getElementById("btn-download-pcap");
 
-    pcapBtn.href = `/api/export_pcap/${id}`;
+    pcapBtn.href = `${API_BASE}/api/export_pcap/${id}`;
 
     details.innerHTML = `
         <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px; margin-bottom:14px;">
