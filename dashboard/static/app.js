@@ -81,7 +81,10 @@ setupCampusScrollCamera();
 
 // Resolve Backend Host: supports Render all-in-one OR Vercel (frontend) + Render (backend)
 const urlParams = new URLSearchParams(window.location.search);
-const customBackend = urlParams.get("backend") || window.SENTINEL_BACKEND || localStorage.getItem("SENTINEL_BACKEND");
+let customBackend = urlParams.get("backend") || window.SENTINEL_BACKEND || localStorage.getItem("SENTINEL_BACKEND");
+if (!customBackend && window.location.hostname.includes("vercel.app")) {
+    customBackend = "sentinel-edge.onrender.com";
+}
 if (urlParams.get("backend")) {
     localStorage.setItem("SENTINEL_BACKEND", urlParams.get("backend"));
 }
