@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SENTINEL EDGE - Poster Presentation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-canvas: #090D16;
+            --card-bg: #111827;
+            --card-border: #1F2E4A;
+            --accent-cyan: #06B6D4;
+            --accent-emerald: #10B981;
+            --accent-crimson: #EF4444;
+            --accent-amber: #F59E0B;
+            --accent-purple: #8B5CF6;
+            --text-main: #F3F4F6;
+            --text-sub: #9CA3AF;
+            --font-head: 'Space Grotesk', sans-serif;
+            --font-body: 'Inter', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-canvas);
+            color: var(--text-main);
+            font-family: var(--font-body);
+            padding: 30px;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* Poster Container (Standard 16:9 or A1/A2 widescreen aspect) */
+        .poster {
+            width: 1400px;
+            max-width: 100%;
+            background: linear-gradient(180deg, #0D1322 0%, #080C14 100%);
+            border: 2px solid var(--card-border);
+            border-radius: 20px;
+            padding: 35px 40px;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8);
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        /* Header Banner */
+        .poster-header {
+            border-bottom: 2px solid var(--card-border);
+            padding-bottom: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-title-group h1 {
+            font-family: var(--font-head);
+            font-size: 38px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .header-title-group h1 span {
+            background: linear-gradient(90deg, #06B6D4, #3B82F6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .header-title-group p {
+            font-size: 16px;
+            color: var(--text-sub);
+            margin-top: 6px;
+            font-weight: 500;
+        }
+
+        .badge-tag {
+            background: rgba(6, 182, 212, 0.15);
+            border: 1px solid var(--accent-cyan);
+            color: var(--accent-cyan);
+            font-family: var(--font-mono);
+            font-size: 12px;
+            padding: 6px 14px;
+            border-radius: 999px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* 3-Column Poster Layout */
+        .poster-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.35fr 1fr;
+            gap: 24px;
+        }
+
+        .col {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* Card Section */
+        .section-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 14px;
+            padding: 20px;
+            position: relative;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .section-card.highlight-green {
+            border-color: rgba(16, 185, 129, 0.4);
+            background: linear-gradient(180deg, rgba(16, 185, 129, 0.05) 0%, var(--card-bg) 100%);
+        }
+
+        .section-card.highlight-blue {
+            border-color: rgba(6, 182, 212, 0.4);
+            background: linear-gradient(180deg, rgba(6, 182, 212, 0.05) 0%, var(--card-bg) 100%);
+        }
+
+        .card-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .card-title .icon {
+            font-size: 18px;
+        }
+
+        .card-title h2 {
+            font-family: var(--font-head);
+            font-size: 16px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            color: var(--text-main);
+            text-transform: uppercase;
+        }
+
+        .card-content {
+            font-size: 13px;
+            color: #D1D5DB;
+            line-height: 1.6;
+        }
+
+        .card-content p {
+            margin-bottom: 10px;
+        }
+
+        .card-content strong {
+            color: var(--text-main);
+        }
+
+        /* Highlights & Pills */
+        .pill-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .pill-item {
+            background: rgba(255, 255, 255, 0.03);
+            border-left: 3px solid var(--accent-cyan);
+            padding: 8px 12px;
+            border-radius: 0 6px 6px 0;
+            font-size: 12px;
+        }
+
+        .pill-item.red { border-left-color: var(--accent-crimson); }
+        .pill-item.green { border-left-color: var(--accent-emerald); }
+        .pill-item.amber { border-left-color: var(--accent-amber); }
+
+        /* Flow Diagram in Center */
+        .pipeline-box {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .tier-node {
+            background: #162035;
+            border: 1px solid #28395B;
+            border-radius: 8px;
+            padding: 10px 14px;
+            position: relative;
+        }
+
+        .tier-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: var(--font-mono);
+            font-size: 11px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .tier-badge {
+            background: #0284c7;
+            color: white;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 9px;
+        }
+
+        .tier-desc {
+            font-size: 11px;
+            color: var(--text-sub);
+        }
+
+        .connector-arrow {
+            text-align: center;
+            color: var(--accent-cyan);
+            font-size: 14px;
+            font-weight: bold;
+            line-height: 1;
+        }
+
+        /* Comparison Table */
+        .comp-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 11px;
+            margin-top: 8px;
+        }
+
+        .comp-table th {
+            background: #0D1424;
+            color: var(--accent-cyan);
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid var(--card-border);
+            font-family: var(--font-mono);
+        }
+
+        .comp-table td {
+            padding: 8px;
+            border-bottom: 1px solid #1A2640;
+            color: #E5E7EB;
+        }
+
+        /* Benchmark Stats Grid */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-top: 10px;
+        }
+
+        .metric-box {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+            padding: 12px;
+            text-align: center;
+        }
+
+        .metric-num {
+            font-family: var(--font-mono);
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .metric-label {
+            font-size: 11px;
+            color: var(--text-sub);
+            margin-top: 4px;
+        }
+
+        /* Footer */
+        .poster-footer {
+            border-top: 1px solid var(--card-border);
+            padding-top: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            color: var(--text-sub);
+        }
+
+        .footer-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .tag-active {
+            color: var(--accent-emerald);
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="poster">
+        <!-- Header Banner -->
+        <header class="poster-header">
+            <div class="header-title-group">
+                <h1>SENTINEL <span>EDGE</span></h1>
+                <p>Autonomous Lightweight Edge IDPS & Real-Time Incident Forensics using AI Agents and Multi-Layer Neurons</p>
+            </div>
+            <div class="badge-tag">HACKATHON INNOVATION 2026</div>
+        </header>
+
+        <!-- 3-Column Content Layout -->
+        <main class="poster-grid">
+            
+            <!-- COLUMN 1: PROBLEM & MOTIVATION -->
+            <div class="col">
+                <!-- Section 1: Problem Statement -->
+                <div class="section-card">
+                    <div class="card-title">
+                        <span class="icon">⚠️</span>
+                        <h2>1. The Edge Dilemma</h2>
+                    </div>
+                    <div class="card-content">
+                        <p>
+                            Modern mid-sized enterprises and college campuses manage thousands of heterogeneous endpoints (lab PCs, faculty systems, student laptops) branching from an <strong>Admin Router</strong> through departmental switches (Lab-1, Lab-2, Lab-3).
+                        </p>
+                        <div class="pill-list">
+                            <div class="pill-item red">
+                                <strong>Hardware Bottleneck:</strong> Traditional security appliances (Suricata + Zeek + Elastic) demand 4–8 GB RAM and heavy CPU, crashing low-cost edge routers.
+                            </div>
+                            <div class="pill-item amber">
+                                <strong>The False Positive Hazard:</strong> Naive rate-limiters block genuine students downloading research datasets, mistaking heavy volume for a cyber attack.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 2: SentinelEdge Vision -->
+                <div class="section-card highlight-blue">
+                    <div class="card-title">
+                        <span class="icon">💡</span>
+                        <h2>2. Our Solution & Scope</h2>
+                    </div>
+                    <div class="card-content">
+                        <p>
+                            <strong>SentinelEdge</strong> is an intelligent, low-overhead edge tap deployed directly at the main router management/SPAN port.
+                        </p>
+                        <div class="pill-list">
+                            <div class="pill-item green">
+                                <strong>Sub-Millisecond Wire Inspection:</strong> Clean traffic forwarded with near-zero latency (< 0.4 ms).
+                            </div>
+                            <div class="pill-item">
+                                <strong>Dual-Engine Gatekeeping:</strong> Snort/Suricata rules for deterministic CVEs + AI Agent & Neurons for zero-day behavioral anomalies.
+                            </div>
+                            <div class="pill-item">
+                                <strong>Embedded Forensics:</strong> Zero-server SQLite WAL database + Wireshark PCAP generation.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 3: Network Topology Context -->
+                <div class="section-card">
+                    <div class="card-title">
+                        <span class="icon">🌐</span>
+                        <h2>3. Campus Network Context</h2>
+                    </div>
+                    <div class="card-content">
+                        <p>
+                            Directly reflects the real-world hierarchical topology:
+                        </p>
+                        <div class="pill-item">
+                            <strong>Admin Gateway Router:</strong> Primary edge TAP & dynamic firewall enforcement point.
+                        </div>
+                        <div class="pill-item">
+                            <strong>Segmented Edge Switches:</strong> Lab-1 (Student PCs), Lab-2 (Research Kits), Lab-3 (Faculty & Admin Servers).
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- COLUMN 2: ARCHITECTURE & CORE INNOVATION -->
+            <div class="col">
+                <!-- Section 4: 4-Tier Pipeline Architecture -->
+                <div class="section-card highlight-green">
+                    <div class="card-title">
+                        <span class="icon">⚙️</span>
+                        <h2>4. The 4-Tier Autonomous Pipeline</h2>
+                    </div>
+                    <div class="card-content">
+                        <p>Hierarchical triage ensuring deep compute is triggered <em>only</em> when required:</p>
+                        
+                        <div class="pipeline-box">
+                            <!-- Tier 1 -->
+                            <div class="tier-node">
+                                <div class="tier-header">
+                                    <span class="tier-badge">TIER 1</span>
+                                    <span style="color:var(--accent-cyan);">SURICATA & SNORT WIRE FILTER</span>
+                                </div>
+                                <div class="tier-desc">
+                                    Wire-speed .rules parsing, stateless flag checks (Xmas, NULL), and empty-port velocity thresholding. Clean flows bypass to destination immediately!
+                                </div>
+                            </div>
+                            
+                            <div class="connector-arrow">▼ (If Flagged / Ambiguous)</div>
+
+                            <!-- Tier 2 -->
+                            <div class="tier-node">
+                                <div class="tier-header">
+                                    <span class="tier-badge">TIER 2</span>
+                                    <span style="color:var(--accent-purple);">SENTINEL AI AGENT</span>
+                                </div>
+                                <div class="tier-desc">
+                                    Flow aggregator profiling <strong>Port Dispersion & Port Entropy</strong>. Distinguishes single-port heavy streams from multi-port scans. Normalizes 10-feature vector.
+                                </div>
+                            </div>
+
+                            <div class="connector-arrow">▼ (10-Feature Vector)</div>
+
+                            <!-- Tier 3 -->
+                            <div class="tier-node">
+                                <div class="tier-header">
+                                    <span class="tier-badge">TIER 3</span>
+                                    <span style="color:var(--accent-amber);">THE NEURONS (DNN)</span>
+                                </div>
+                                <div class="tier-desc">
+                                    Multi-Layer Neural Network (10 ➔ 32 ➔ 16 ➔ 5 Classes). Deep non-linear pattern matching trained on standardized CIC-IDS2017 flow distributions.
+                                </div>
+                            </div>
+
+                            <div class="connector-arrow">▼ (Classification Verdict)</div>
+
+                            <!-- Tier 4 -->
+                            <div class="tier-node">
+                                <div class="tier-header">
+                                    <span class="tier-badge">TIER 4</span>
+                                    <span style="color:var(--accent-crimson);">AUTONOMOUS TRI-STATE RESPONSE</span>
+                                </div>
+                                <div class="tier-desc">
+                                    <strong>Forward:</strong> Clean or genuine heavy data.<br>
+                                    <strong>Block & Jail:</strong> Terminate attacker IP with 90–120s cooldown.<br>
+                                    <strong>Quarantine:</strong> @very suspicious anomaly deep forensic dump.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 5: Crucial Distinction Table -->
+                <div class="section-card">
+                    <div class="card-title">
+                        <span class="icon">⚖️</span>
+                        <h2>5. Crucial Distinction: Port Scan vs. Heavy Data</h2>
+                    </div>
+                    <div class="card-content">
+                        <p>How SentinelEdge eliminates false disconnects for legitimate high-bandwidth users:</p>
+                        <table class="comp-table">
+                            <thead>
+                                <tr>
+                                    <th>METRIC</th>
+                                    <th>GENUINE HEAVY TRANSFER</th>
+                                    <th>HACKER EMPTY-PORT SCAN</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Target Ports</strong></td>
+                                    <td><span style="color:var(--accent-emerald);">Single Port</span> (443 / 8080)</td>
+                                    <td><span style="color:var(--accent-crimson);">15+ Empty/Closed Ports</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Packet Size</strong></td>
+                                    <td>Full MTU (1460 bytes)</td>
+                                    <td>Tiny SYN frames (40-60 bytes)</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Handshake</strong></td>
+                                    <td>Full Established ACK Stream</td>
+                                    <td>Half-Open SYN Probes / RSTs</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Sentinel Action</strong></td>
+                                    <td><strong style="color:var(--accent-emerald);">ALLOWED (Zero Disconnect)</strong></td>
+                                    <td><strong style="color:var(--accent-crimson);">TERMINATED (90s Cooldown Jail)</strong></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- COLUMN 3: RESULTS & BENCHMARKS -->
+            <div class="col">
+                <!-- Section 6: Edge Benchmarks -->
+                <div class="section-card highlight-blue">
+                    <div class="card-title">
+                        <span class="icon">📊</span>
+                        <h2>6. Empirical Edge Benchmarks</h2>
+                    </div>
+                    <div class="card-content">
+                        <p>Proven lightweight performance measured directly on edge execution:</p>
+                        
+                        <div class="metrics-grid">
+                            <div class="metric-box">
+                                <div class="metric-num" style="color:var(--accent-cyan);">0.32 ms</div>
+                                <div class="metric-label">Wire Inspection Latency</div>
+                            </div>
+                            <div class="metric-box">
+                                <div class="metric-num" style="color:var(--accent-emerald);">32.8 MB</div>
+                                <div class="metric-label">Total RAM Footprint</div>
+                            </div>
+                            <div class="metric-box">
+                                <div class="metric-num" style="color:var(--accent-amber);">&lt; 3.0%</div>
+                                <div class="metric-label">Edge CPU Load</div>
+                            </div>
+                            <div class="metric-box">
+                                <div class="metric-num" style="color:var(--accent-purple);">98.6%</div>
+                                <div class="metric-label">Neuron Accuracy (CIC-IDS)</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 7: Autonomous Response & Forensics -->
+                <div class="section-card">
+                    <div class="card-title">
+                        <span class="icon">🛡️</span>
+                        <h2>7. Dynamic Jail & Forensic PCAP</h2>
+                    </div>
+                    <div class="card-content">
+                        <div class="pill-list">
+                            <div class="pill-item red">
+                                <strong>Dynamic Firewall Jails (1-2 Min):</strong> When an attacker targets empty ports, their IP is immediately dropped. An active countdown timer (90s) protects the network from DDoS.
+                            </div>
+                            <div class="pill-item green">
+                                <strong>Automatic Expiry:</strong> Once cooldown expires without further threats, the IP is automatically released with zero manual admin intervention.
+                            </div>
+                            <div class="pill-item amber">
+                                <strong>Wireshark-Ready Forensics:</strong> Generates real-time standard <code>.pcap</code> binaries of flagged packets for courtroom or incident response verification.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 8: Key Takeaways -->
+                <div class="section-card">
+                    <div class="card-title">
+                        <span class="icon">🏆</span>
+                        <h2>8. Key Hackathon Takeaways</h2>
+                    </div>
+                    <div class="card-content">
+                        <p>
+                            • <strong>Affordable Enterprise Security:</strong> Delivers advanced IDPS capabilities to colleges and mid-enterprises without expensive hardware appliances.<br>
+                            • <strong>Hybrid Defense:</strong> Merges battle-tested signature rules (Snort/Suricata) with adaptive deep learning ("Neurons").<br>
+                            • <strong>Zero Disconnects:</strong> Intelligent port entropy guarantees genuine heavy file sharing is never interrupted.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+
+        <!-- Poster Footer -->
+        <footer class="poster-footer">
+            <div class="footer-left">
+                <span class="tag-active">● SENTINEL EDGE ENGINE DEPLOYED</span>
+                <span>|</span>
+                <span>Dataset: CIC-IDS2017 & Campus NetFlow Benchmarks</span>
+                <span>|</span>
+                <span>Architecture: Python 3.11, FastAPI, Scikit/MLP, SQLite WAL</span>
+            </div>
+            <div>
+                <strong>InnoSprit Hackathon 2026</strong>
+            </div>
+        </footer>
+    </div>
+
+</body>
+</html>

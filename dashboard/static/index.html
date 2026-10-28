@@ -1,0 +1,1127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SENTINEL EDGE | Autonomous Lightweight Edge IDPS & Real-Time SOC</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="layout-wrapper">
+        <!-- =================================================================== -->
+        <!-- LEFT SIDEBAR NAVIGATION                                             -->
+        <!-- =================================================================== -->
+        <aside class="sidebar">
+            <div class="sidebar-brand">
+                <div class="brand-shield-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" fill="rgba(14, 165, 233, 0.2)" stroke="#38BDF8"/>
+                        <path d="M12 8v4M12 16h.01" stroke="#38BDF8" stroke-width="2.5" stroke-linecap="round"/>
+                    </svg>
+                </div>
+            </div>
+
+            <nav class="sidebar-menu">
+                <button class="nav-item active" data-target="dashboard" onclick="switchNav(this)">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                    <span>Dashboard</span>
+                </button>
+                <button class="nav-item" data-target="campus" onclick="switchNav(this)">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+                    <span>Campus View</span>
+                </button>
+                <button class="nav-item" data-target="live" onclick="switchNav(this)">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                    <span>Live Monitor</span>
+                </button>
+                <button class="nav-item" data-target="incidents" onclick="switchNav(this)">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                    <span>Incidents</span>
+                </button>
+                <button class="nav-item" data-target="forensics" onclick="switchNav(this)">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                    <span>Forensics</span>
+                </button>
+                <button class="nav-item" data-target="blocklist" onclick="switchNav(this)">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    <span>Blocklist</span>
+                </button>
+                <button class="nav-item" data-target="ai-analysis" onclick="switchNav(this)">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 4.44-2.04z"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-4.44-2.04z"/></svg>
+                    <span>AI Analysis</span>
+                </button>
+                <button class="nav-item" data-target="reports" onclick="switchNav(this)">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+                    <span>Reports</span>
+                </button>
+                <button class="nav-item" data-target="settings" onclick="switchNav(this)">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                    <span>Settings</span>
+                </button>
+            </nav>
+        </aside>
+
+        <!-- =================================================================== -->
+        <!-- MAIN CONTENT AREA                                                   -->
+        <!-- =================================================================== -->
+        <main class="main-viewport">
+            <!-- Top Header Bar -->
+            <header class="top-header">
+                <div class="brand-title-wrap">
+                    <div class="brand-shield-small">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#38BDF8" stroke-width="2.2">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" fill="rgba(14, 165, 233, 0.25)"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="brand-headline">SENTINEL <span>EDGE</span></div>
+                        <div class="brand-tagline">Autonomous Lightweight Edge IDPS & Active Forensics Engine</div>
+                    </div>
+                </div>
+
+                <!-- Live Status Pills -->
+                <div class="telemetry-capsule">
+                    <div class="capsule-item">
+                        <span class="live-dot pulse"></span>
+                        <span class="cap-label">EDGE STATUS:</span>
+                        <span class="cap-val text-emerald">ONLINE</span>
+                    </div>
+                    <div class="capsule-sep"></div>
+                    <div class="capsule-item">
+                        <span class="cap-icon">⚡</span>
+                        <span class="cap-label">WIRE LATENCY:</span>
+                        <span class="cap-val text-cyan" id="avg-latency">0.64 ms</span>
+                    </div>
+                    <div class="capsule-sep"></div>
+                    <div class="capsule-item">
+                        <span class="cap-icon">💾</span>
+                        <span class="cap-label">EDGE RAM:</span>
+                        <span class="cap-val text-white" id="edge-ram">37.39 MB</span>
+                    </div>
+                    <div class="capsule-sep"></div>
+                    <div class="capsule-item">
+                        <span class="cap-icon">⚙️</span>
+                        <span class="cap-label">CPU LOAD:</span>
+                        <span class="cap-val text-white" id="edge-cpu">6%</span>
+                    </div>
+                    <div class="capsule-sep"></div>
+                    <div class="capsule-item">
+                        <span class="cap-label">ROUTER CONSOLE:</span>
+                        <span class="cap-val text-amber">Main Gateway SPAN</span>
+                    </div>
+                </div>
+
+                <!-- User Icons -->
+                <div class="header-actions">
+                    <button class="icon-btn" title="Alert Notifications">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+                    </button>
+                    <button class="icon-btn" title="System Settings">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                    </button>
+                    <div class="user-avatar" title="Admin User">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    </div>
+                </div>
+            </header>
+
+            <!-- =============================================================== -->
+            <!-- ROW 1: TOP 5 KPI METRIC CARDS                                   -->
+            <!-- =============================================================== -->
+            <section class="kpi-deck" id="section-dashboard">
+                <!-- Card 1: Total Inspected -->
+                <div class="kpi-tile card-blue">
+                    <div class="tile-icon-wrap bg-blue-subtle text-cyan">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                    </div>
+                    <div class="tile-body">
+                        <div class="tile-title">TOTAL INSPECTED</div>
+                        <div class="tile-number text-white" id="stat-total">39,159</div>
+                        <div class="tile-subtitle">Continuous Edge Wide Stream</div>
+                    </div>
+                    <div class="tile-sparkline">
+                        <svg viewBox="0 0 100 35" preserveAspectRatio="none">
+                            <path d="M0 25 Q 25 15, 50 22 T 100 10" fill="none" stroke="#38BDF8" stroke-width="2"/>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Card 2: Forwarded to Destination -->
+                <div class="kpi-tile card-green">
+                    <div class="tile-icon-wrap bg-green-subtle text-emerald">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                    </div>
+                    <div class="tile-body">
+                        <div class="tile-title">FORWARDED TO DESTINATION</div>
+                        <div class="tile-number text-emerald" id="stat-forwarded">38,478</div>
+                        <div class="tile-subtitle">Clean Packets Delivered</div>
+                    </div>
+                    <div class="tile-sparkline">
+                        <svg viewBox="0 0 100 35" preserveAspectRatio="none">
+                            <path d="M0 28 Q 30 18, 60 22 T 100 8" fill="none" stroke="#10B981" stroke-width="2"/>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Card 3: Genuine Heavy Transfers -->
+                <div class="kpi-tile card-teal">
+                    <div class="tile-icon-wrap bg-teal-subtle text-teal">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+                    </div>
+                    <div class="tile-body">
+                        <div class="tile-title">GENUINE HEAVY TRANSFERS</div>
+                        <div class="tile-number text-teal" id="stat-heavy">401</div>
+                        <div class="tile-subtitle">Large Datagram Protocols (No False Drop)</div>
+                    </div>
+                </div>
+
+                <!-- Card 4: Attacks Blocked & Jailed -->
+                <div class="kpi-tile card-red">
+                    <div class="tile-icon-wrap bg-red-subtle text-crimson">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                    </div>
+                    <div class="tile-body">
+                        <div class="tile-title">ATTACKS BLOCKED & JAILED</div>
+                        <div class="tile-number text-crimson" id="stat-blocked">681</div>
+                        <div class="tile-subtitle">Defensive Firewall Jails</div>
+                    </div>
+                    <div class="tile-sparkline">
+                        <svg viewBox="0 0 100 35" preserveAspectRatio="none">
+                            <path d="M0 15 Q 25 30, 50 18 T 100 25" fill="none" stroke="#EF4444" stroke-width="2"/>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Card 5: Quarantined Forensics -->
+                <div class="kpi-tile card-amber">
+                    <div class="tile-icon-wrap bg-amber-subtle text-amber">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m4.93 4.93 4.24 4.24"/><path d="m14.83 9.17 4.24-4.24"/><path d="m14.83 14.83 4.24 4.24"/><path d="m9.17 14.83-4.24 4.24"/></svg>
+                    </div>
+                    <div class="tile-body">
+                        <div class="tile-title">QUARANTINED FORENSICS</div>
+                        <div class="tile-number text-amber" id="stat-quarantined">0</div>
+                        <div class="tile-subtitle">Deep Inspection Dump Queue</div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="main-workspace" id="main-workspace" aria-label="Campus monitoring workspace">
+                <div class="workspace-left" id="workspace-left">
+                    <section class="hero-branding panel-box">
+                        <div class="hero-eyebrow"><span class="dot-green"></span> EDGE DEFENSE / ONLINE</div>
+                        <h1 class="hero-title">SENTINEL<br><span>EDGE</span></h1>
+                        <p class="hero-tagline">Autonomous Lightweight Edge IDPS &amp; Active Forensics Engine</p>
+                        <p class="hero-copy">Real-time network monitoring and threat response across the campus edge.</p>
+                        <div class="hero-health">
+                            <span class="live-dot pulse"></span>
+                            <span>Edge status</span>
+                            <strong>ONLINE</strong>
+                            <span class="hero-health-detail">Wire, memory, and CPU telemetry in the header</span>
+                        </div>
+                        <div class="hero-coordinate" aria-hidden="true">VVIT / CAMPUS NETWORK / 01</div>
+                    </section>
+                </div>
+                <div class="workspace-right" id="workspace-right"></div>
+            </section>
+
+            <section class="lower-dashboard" aria-label="Security processing and active firewall blocks">
+                <div id="pipeline-slot"></div>
+                <div id="blocklist-slot"></div>
+            </section>
+
+            <!-- =============================================================== -->
+            <!-- ROW 2: 3D CAMPUS VISUALIZATION (LEFT) + 4-TIER PIPELINE (RIGHT) -->
+            <!-- =============================================================== -->
+            <section class="main-split-grid">
+                <!-- Left Column: Campus Network Visualization 3D -->
+                <div class="panel-box campus-panel" id="section-campus">
+                    <div class="panel-header-bar">
+                        <div class="title-with-icon">
+                            <div class="badge-icon-blue">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="#38BDF8" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+                            </div>
+                            <div>
+                                <h3>CAMPUS NETWORK VISUALIZATION (3D)</h3>
+                                <p>Live network traffic, threat detection and secure data flow across university campus</p>
+                            </div>
+                        </div>
+
+                        <!-- Top-Right 3D Controls -->
+                        <div class="map-controls-group">
+                            <div class="block-select-dropdown-wrap">
+                                <select id="select-campus-block" class="block-dropdown-select" title="Select block to view lab origins and system allocations">
+                                    <option value="" disabled>🏢 Select Block Details...</option>
+                                    <option value="siemens" selected>Siemens Block (8 Labs · 480 PCs)</option>
+                                    <option value="blockA">A Block (2 Labs · 120 PCs)</option>
+                                    <option value="blockB">B Block (2 Labs · 120 PCs)</option>
+                                    <option value="blockC">C Block (2 Labs · 120 PCs)</option>
+                                    <option value="blockD">D Block (2 Labs · 120 PCs)</option>
+                                    <option value="central">Central Block (2 Labs · 120 PCs)</option>
+                                    <option value="viva">Viva School (1 Lab · 60 PCs)</option>
+                                </select>
+                            </div>
+                            <button class="btn-toggle active" id="btn-3d-view">3D View</button>
+                            <button class="btn-toggle" id="btn-top-view">Top View</button>
+                            <div class="live-traffic-badge">
+                                <span class="dot-green"></span> Live Traffic
+                            </div>
+                            <div class="toggle-switch-wrap">
+                                <span class="toggle-label">Show Labels</span>
+                                <label class="switch">
+                                    <input type="checkbox" id="toggle-labels-check" checked>
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 3D Canvas Container -->
+                    <div class="canvas-3d-viewport">
+                        <!-- Left Overlaid Legend -->
+                        <div class="map-legend-overlay">
+                            <div class="legend-row"><span class="legend-dot green"></span> Normal Traffic</div>
+                            <div class="legend-row"><span class="legend-dot orange"></span> High Volume</div>
+                            <div class="legend-row"><span class="legend-dot red"></span> Threat Detected</div>
+                            <div class="legend-row"><span class="legend-dot cyan"></span> Secure Link</div>
+                        </div>
+
+                        <!-- Embedded 3D Map View -->
+                        <iframe src="/campus3d/index.html" class="campus-iframe" id="campus-3d-frame" title="VVIT Campus 3D Network Map"></iframe>
+
+                        <!-- Bottom-Right Compass Rose -->
+                        <div class="compass-rose-overlay">
+                            <svg viewBox="0 0 60 60" width="46" height="46">
+                                <circle cx="30" cy="30" r="24" fill="rgba(15, 23, 42, 0.7)" stroke="#1E3A5F" stroke-width="1.5"/>
+                                <polygon points="30,8 35,30 30,26" fill="#38BDF8"/>
+                                <polygon points="30,8 25,30 30,26" fill="#0284C7"/>
+                                <polygon points="30,52 35,30 30,34" fill="#64748B"/>
+                                <polygon points="30,52 25,30 30,34" fill="#475569"/>
+                                <text x="30" y="6" text-anchor="middle" fill="#38BDF8" font-size="7" font-weight="bold">N</text>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column: 4-Tier Pipeline & Dynamic Blocklist -->
+                <div class="right-stack-col">
+                    <!-- Top Right: The 4-Tier Sentinel Decision Pipeline -->
+                    <div class="panel-box pipeline-card" id="section-live">
+                        <div class="panel-header-bar">
+                            <div class="title-with-icon">
+                                <div class="badge-icon-cross">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="#38BDF8" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                                </div>
+                                <div>
+                                    <h3>THE 4-TIER SENTINEL DECISION PIPELINE</h3>
+                                    <p>From packet capture to autonomous response</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 5 Pipeline Steps Sequence with Glowing Relatable Logos -->
+                        <div class="pipeline-sequence">
+                            <!-- Step 1: Ingress Packet -->
+                            <div class="pipe-step" id="step-ingress">
+                                <div class="step-badge">1</div>
+                                <div class="step-icon step-glowing-icon" title="Network Wire-Speed Packet Ingress & Fiber Interface">
+                                    <svg viewBox="0 0 72 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <defs>
+                                            <filter id="ingGlow" x="-30%" y="-30%" width="160%" height="160%">
+                                                <feGaussianBlur stdDeviation="2" result="b1"/>
+                                                <feMerge><feMergeNode in="b1"/><feMergeNode in="SourceGraphic"/></feMerge>
+                                            </filter>
+                                            <linearGradient id="fiberStream" x1="0%" y1="0%" x2="100%" y2="0%">
+                                                <stop offset="0%" stop-color="#38BDF8" stop-opacity="0"/>
+                                                <stop offset="100%" stop-color="#38BDF8" stop-opacity="0.9"/>
+                                            </linearGradient>
+                                        </defs>
+
+                                        <!-- Fiber Optic High-Speed Inflow Stream -->
+                                        <path d="M 4 16 L 22 16" stroke="url(#fiberStream)" stroke-width="1.5" stroke-dasharray="3 2"/>
+                                        <path d="M 2 24 L 20 24" stroke="url(#fiberStream)" stroke-width="2.2" stroke-linecap="round"/>
+                                        <path d="M 4 32 L 22 32" stroke="url(#fiberStream)" stroke-width="1.5" stroke-dasharray="3 2"/>
+
+                                        <!-- Ingress Laser Pulses -->
+                                        <circle r="1.8" fill="#FFFFFF" filter="url(#ingGlow)">
+                                            <animateMotion path="M 2 16 L 24 16" dur="0.9s" repeatCount="indefinite"/>
+                                        </circle>
+                                        <circle r="2.2" fill="#38BDF8" filter="url(#ingGlow)">
+                                            <animateMotion path="M 0 24 L 24 24" dur="0.75s" repeatCount="indefinite"/>
+                                        </circle>
+                                        <circle r="1.8" fill="#FFFFFF" filter="url(#ingGlow)">
+                                            <animateMotion path="M 2 32 L 24 32" dur="0.85s" begin="0.3s" repeatCount="indefinite"/>
+                                        </circle>
+
+                                        <!-- 3D Network Datagram Frame -->
+                                        <g transform="translate(18, 0)">
+                                            <!-- Packet Body / Buffer Shell -->
+                                            <rect x="6" y="8" width="38" height="32" rx="6" fill="rgba(14, 165, 233, 0.12)" stroke="#38BDF8" stroke-width="1.4" filter="url(#ingGlow)"/>
+
+                                            <!-- Header Band [IP / TCP / TAP] -->
+                                            <path d="M 6 16 L 44 16" stroke="#38BDF8" stroke-width="1" opacity="0.6"/>
+                                            <rect x="10" y="11" width="12" height="3" rx="1.5" fill="#38BDF8" opacity="0.85"/>
+                                            <rect x="24" y="11" width="8" height="3" rx="1.5" fill="#39FF88" opacity="0.85"/>
+
+                                            <!-- Binary Payload Hex Data Tracks -->
+                                            <path d="M 10 22 L 32 22" stroke="rgba(56, 189, 248, 0.6)" stroke-width="1.5" stroke-linecap="round"/>
+                                            <path d="M 10 27 L 40 27" stroke="rgba(56, 189, 248, 0.45)" stroke-width="1.5" stroke-linecap="round"/>
+                                            <path d="M 10 32 L 26 32" stroke="rgba(57, 255, 136, 0.7)" stroke-width="1.5" stroke-linecap="round"/>
+
+                                            <!-- Checksum Status Beacon -->
+                                            <circle cx="38" cy="32" r="2.4" fill="#39FF88" filter="url(#ingGlow)">
+                                                <animate attributeName="opacity" values="0.4;1;0.4" dur="1.4s" repeatCount="indefinite"/>
+                                            </circle>
+
+                                            <!-- SPAN Mirror Corner Bracket -->
+                                            <path d="M 38 8 L 44 8 L 44 14" stroke="#39FF88" stroke-width="1.5" stroke-linecap="round"/>
+                                        </g>
+                                    </svg>
+                                </div>
+                                <div class="step-title">INGRESS PACKET</div>
+                                <div class="step-sub text-muted" id="pipe-ingress-ip">192.168.10.108:49610</div>
+                                <div class="step-sub text-muted" id="pipe-dest-ip">➔ 145.3.21.66:443</div>
+                            </div>
+
+                            <!-- Animated Glowing Connector Arrow 1 -> 2 -->
+                            <div class="pipe-arrow glowing-connector-arrow">
+                                <svg viewBox="0 0 32 18" width="28" height="16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M 2 9 L 24 9 M 18 3 L 24 9 L 18 15" stroke="#39FF88" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" filter="drop-shadow(0 0 5px #39FF88)"/>
+                                    <circle r="2.2" fill="#FFFFFF" filter="drop-shadow(0 0 4px #39FF88)">
+                                        <animateMotion path="M 2 9 L 24 9" dur="1.1s" repeatCount="indefinite"/>
+                                    </circle>
+                                </svg>
+                            </div>
+
+                            <!-- Step 2: Suricata & Snort -->
+                            <div class="pipe-step" id="step-t1">
+                                <div class="step-badge">2</div>
+                                <div class="step-icon step-glowing-icon" title="Suricata & Snort Fast Wire Rule Signature Engine">
+                                    <svg viewBox="0 0 72 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <defs>
+                                            <filter id="snortGlow" x="-30%" y="-30%" width="160%" height="160%">
+                                                <feGaussianBlur stdDeviation="2.2" result="b2"/>
+                                                <feMerge><feMergeNode in="b2"/><feMergeNode in="SourceGraphic"/></feMerge>
+                                            </filter>
+                                            <radialGradient id="radarSweepGrad" cx="50%" cy="50%" r="50%">
+                                                <stop offset="0%" stop-color="#38BDF8" stop-opacity="0.55"/>
+                                                <stop offset="100%" stop-color="#38BDF8" stop-opacity="0"/>
+                                            </radialGradient>
+                                        </defs>
+
+                                        <!-- Outer Wire-Filter Hex Shield -->
+                                        <polygon points="36,4 58,14 58,34 36,44 14,34 14,14" fill="rgba(14, 165, 233, 0.08)" stroke="#38BDF8" stroke-width="1.3" filter="url(#snortGlow)"/>
+
+                                        <!-- Concentric Threat Radar Rings -->
+                                        <circle cx="36" cy="24" r="14" stroke="rgba(56, 189, 248, 0.35)" stroke-width="0.9" stroke-dasharray="2 2"/>
+                                        <circle cx="36" cy="24" r="8" stroke="rgba(57, 255, 136, 0.45)" stroke-width="0.9"/>
+                                        <circle cx="36" cy="24" r="2.5" fill="#39FF88" filter="url(#snortGlow)"/>
+
+                                        <!-- Crosshair Radar Grid -->
+                                        <line x1="36" y1="10" x2="36" y2="38" stroke="rgba(56, 189, 248, 0.4)" stroke-width="0.8"/>
+                                        <line x1="22" y1="24" x2="50" y2="24" stroke="rgba(56, 189, 248, 0.4)" stroke-width="0.8"/>
+
+                                        <!-- Rotating 360-degree Signature Radar Sweep Beam -->
+                                        <g transform="rotate(0 36 24)">
+                                            <line x1="36" y1="24" x2="50" y2="12" stroke="#39FF88" stroke-width="1.8" filter="url(#snortGlow)" stroke-linecap="round"/>
+                                            <polygon points="36,24 50,12 50,24" fill="url(#radarSweepGrad)"/>
+                                            <animateTransform attributeName="transform" type="rotate" from="0 36 24" to="360 36 24" dur="2.4s" repeatCount="indefinite"/>
+                                        </g>
+
+                                        <!-- Detected Signature Blip (CVE Hit simulation) -->
+                                        <circle cx="43" cy="18" r="1.8" fill="#EF4444" filter="url(#snortGlow)">
+                                            <animate attributeName="opacity" values="0;1;0" dur="2.4s" repeatCount="indefinite"/>
+                                        </circle>
+
+                                        <!-- Snort Signature Inspection Bracket Ticks -->
+                                        <path d="M 18 10 L 14 14 L 14 20" stroke="#39FF88" stroke-width="1.4" stroke-linecap="round"/>
+                                        <path d="M 54 10 L 58 14 L 58 20" stroke="#39FF88" stroke-width="1.4" stroke-linecap="round"/>
+                                    </svg>
+                                </div>
+                                <div class="step-title">SURICATA & SNORT</div>
+                                <div class="step-sub text-muted">Rule Matching & Signature</div>
+                                <div class="step-status text-emerald" id="pipe-t1-val">CLEAN (0 alerts)</div>
+                            </div>
+
+                            <!-- Animated Glowing Connector Arrow 2 -> 3 -->
+                            <div class="pipe-arrow glowing-connector-arrow">
+                                <svg viewBox="0 0 32 18" width="28" height="16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M 2 9 L 24 9 M 18 3 L 24 9 L 18 15" stroke="#39FF88" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" filter="drop-shadow(0 0 5px #39FF88)"/>
+                                    <circle r="2.2" fill="#FFFFFF" filter="drop-shadow(0 0 4px #39FF88)">
+                                        <animateMotion path="M 2 9 L 24 9" dur="1.1s" begin="0.25s" repeatCount="indefinite"/>
+                                    </circle>
+                                </svg>
+                            </div>
+
+                            <!-- Step 3: Sentinel AI Agent -->
+                            <div class="pipe-step" id="step-t2">
+                                <div class="step-badge">3</div>
+                                <div class="step-icon step-glowing-icon" title="Sentinel AI Agent Flow Dispersion & Anomaly Profiler">
+                                    <svg viewBox="0 0 72 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <defs>
+                                            <filter id="aiAgentGlow" x="-30%" y="-30%" width="160%" height="160%">
+                                                <feGaussianBlur stdDeviation="2.2" result="b3"/>
+                                                <feMerge><feMergeNode in="b3"/><feMergeNode in="SourceGraphic"/></feMerge>
+                                            </filter>
+                                            <linearGradient id="aiCircGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                                <stop offset="0%" stop-color="#38BDF8"/>
+                                                <stop offset="100%" stop-color="#39FF88"/>
+                                            </linearGradient>
+                                        </defs>
+
+                                        <!-- Flow Dispersion Orbit Rings (Distinguishing Single Port vs Multi-Port Scans) -->
+                                        <ellipse cx="36" cy="24" rx="28" ry="10" stroke="rgba(56, 189, 248, 0.25)" stroke-width="0.9" stroke-dasharray="3 2" transform="rotate(-15 36 24)"/>
+                                        <ellipse cx="36" cy="24" rx="28" ry="10" stroke="rgba(57, 255, 136, 0.25)" stroke-width="0.9" stroke-dasharray="3 2" transform="rotate(15 36 24)"/>
+
+                                        <!-- Orbiting Flow Dispersion Probe Particles -->
+                                        <circle r="1.6" fill="#38BDF8" filter="url(#aiAgentGlow)">
+                                            <animateMotion path="M 8 24 Q 36 14 64 24 Q 36 34 8 24" dur="2.8s" repeatCount="indefinite"/>
+                                        </circle>
+                                        <circle r="1.6" fill="#39FF88" filter="url(#aiAgentGlow)">
+                                            <animateMotion path="M 64 24 Q 36 34 8 24 Q 36 14 64 24" dur="2.8s" begin="1.4s" repeatCount="indefinite"/>
+                                        </circle>
+
+                                        <!-- Cybernetic AI Brain Silhouette with Circuit Traces -->
+                                        <path d="M 33 13 C 27 13 23 17 23 23 C 23 27 26 31 30 33 C 32 34 33 36 33 38" stroke="url(#aiCircGrad)" stroke-width="1.8" stroke-linecap="round" filter="url(#aiAgentGlow)"/>
+                                        <path d="M 39 13 C 45 13 49 17 49 23 C 49 27 46 31 42 33 C 40 34 39 36 39 38" stroke="url(#aiCircGrad)" stroke-width="1.8" stroke-linecap="round" filter="url(#aiAgentGlow)"/>
+
+                                        <!-- Brain Internal Neural Nodes & Synapses -->
+                                        <line x1="28" y1="21" x2="33" y2="24" stroke="#38BDF8" stroke-width="1.2"/>
+                                        <line x1="44" y1="21" x2="39" y2="24" stroke="#39FF88" stroke-width="1.2"/>
+                                        <line x1="30" y1="29" x2="36" y2="27" stroke="#38BDF8" stroke-width="1.2"/>
+                                        <line x1="42" y1="29" x2="36" y2="27" stroke="#39FF88" stroke-width="1.2"/>
+
+                                        <circle cx="28" cy="21" r="1.8" fill="#E0F2FE"/>
+                                        <circle cx="44" cy="21" r="1.8" fill="#E0F2FE"/>
+                                        <circle cx="30" cy="29" r="1.8" fill="#E0F2FE"/>
+                                        <circle cx="42" cy="29" r="1.8" fill="#E0F2FE"/>
+
+                                        <!-- Central Analytical Eye / Flow Profiler Core -->
+                                        <circle cx="36" cy="24" r="4.2" fill="rgba(9, 26, 19, 0.9)" stroke="#39FF88" stroke-width="1.4" filter="url(#aiAgentGlow)"/>
+                                        <circle cx="36" cy="24" r="2.2" fill="#39FF88">
+                                            <animate attributeName="r" values="1.8;2.6;1.8" dur="1.8s" repeatCount="indefinite"/>
+                                            <animate attributeName="opacity" values="0.7;1;0.7" dur="1.8s" repeatCount="indefinite"/>
+                                        </circle>
+                                    </svg>
+                                </div>
+                                <div class="step-title">SENTINEL AI AGENT</div>
+                                <div class="step-sub text-muted">Fine-tuned Threat Analysis</div>
+                                <div class="step-status text-cyan" id="pipe-t2-val">Score: 0.05</div>
+                            </div>
+
+                            <!-- Animated Glowing Connector Arrow 3 -> 4 -->
+                            <div class="pipe-arrow glowing-connector-arrow">
+                                <svg viewBox="0 0 32 18" width="28" height="16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M 2 9 L 24 9 M 18 3 L 24 9 L 18 15" stroke="#39FF88" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" filter="drop-shadow(0 0 5px #39FF88)"/>
+                                    <circle r="2.2" fill="#FFFFFF" filter="drop-shadow(0 0 4px #39FF88)">
+                                        <animateMotion path="M 2 9 L 24 9" dur="1.1s" begin="0.5s" repeatCount="indefinite"/>
+                                    </circle>
+                                </svg>
+                            </div>
+
+                            <!-- Step 4: The Neurons (DNN) with Layered Glowing Diagram -->
+                            <div class="pipe-step" id="step-t3">
+                                <div class="step-badge">4</div>
+                                <div class="step-icon neuron-diagram-icon" title="Multi-Layer Deep Neural Network (DNN) Architecture">
+                                    <svg viewBox="0 0 120 54" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <defs>
+                                            <filter id="neuronGlow" x="-30%" y="-30%" width="160%" height="160%">
+                                                <feGaussianBlur stdDeviation="2.2" result="blur"/>
+                                                <feMerge>
+                                                    <feMergeNode in="blur"/>
+                                                    <feMergeNode in="SourceGraphic"/>
+                                                </feMerge>
+                                            </filter>
+                                            <filter id="nodeHalo" x="-60%" y="-60%" width="220%" height="220%">
+                                                <feGaussianBlur stdDeviation="3.4" result="halo"/>
+                                                <feMerge>
+                                                    <feMergeNode in="halo"/>
+                                                    <feMergeNode in="SourceGraphic"/>
+                                                </feMerge>
+                                            </filter>
+                                            <linearGradient id="synL1L2" x1="0%" y1="0%" x2="100%" y2="0%">
+                                                <stop offset="0%" stop-color="#38BDF8" stop-opacity="0.75"/>
+                                                <stop offset="100%" stop-color="#39FF88" stop-opacity="0.85"/>
+                                            </linearGradient>
+                                            <linearGradient id="synL2L3" x1="0%" y1="0%" x2="100%" y2="0%">
+                                                <stop offset="0%" stop-color="#39FF88" stop-opacity="0.85"/>
+                                                <stop offset="100%" stop-color="#80FFD0" stop-opacity="0.95"/>
+                                            </linearGradient>
+                                        </defs>
+
+                                        <!-- Layer 1 Background Capsule (Input) -->
+                                        <rect x="9" y="3" width="22" height="48" rx="8" fill="rgba(56, 189, 248, 0.08)" stroke="rgba(56, 189, 248, 0.3)" stroke-width="0.8"/>
+                                        <text x="20" y="47" font-size="5" font-family="'JetBrains Mono', monospace" font-weight="700" fill="#38BDF8" text-anchor="middle" letter-spacing="0.5">IN:L1</text>
+
+                                        <!-- Layer 2 Background Capsule (Hidden) -->
+                                        <rect x="49" y="2" width="22" height="50" rx="8" fill="rgba(57, 255, 136, 0.08)" stroke="rgba(57, 255, 136, 0.3)" stroke-width="0.8"/>
+                                        <text x="60" y="48.5" font-size="5" font-family="'JetBrains Mono', monospace" font-weight="700" fill="#39FF88" text-anchor="middle" letter-spacing="0.5">HID:L2</text>
+
+                                        <!-- Layer 3 Background Capsule (Output) -->
+                                        <rect x="89" y="5" width="22" height="44" rx="8" fill="rgba(128, 255, 208, 0.08)" stroke="rgba(128, 255, 208, 0.3)" stroke-width="0.8"/>
+                                        <text x="100" y="45.5" font-size="5" font-family="'JetBrains Mono', monospace" font-weight="700" fill="#80FFD0" text-anchor="middle" letter-spacing="0.5">OUT:L3</text>
+
+                                        <!-- Interconnecting Synapses Layer 1 to Layer 2 -->
+                                        <g stroke="url(#synL1L2)" stroke-width="0.85" opacity="0.45" class="synapse-mesh">
+                                            <line x1="20" y1="11" x2="60" y2="8"/>
+                                            <line x1="20" y1="11" x2="60" y2="18"/>
+                                            <line x1="20" y1="11" x2="60" y2="28"/>
+                                            <line x1="20" y1="11" x2="60" y2="38"/>
+
+                                            <line x1="20" y1="23" x2="60" y2="8"/>
+                                            <line x1="20" y1="23" x2="60" y2="18"/>
+                                            <line x1="20" y1="23" x2="60" y2="28"/>
+                                            <line x1="20" y1="23" x2="60" y2="38"/>
+
+                                            <line x1="20" y1="35" x2="60" y2="8"/>
+                                            <line x1="20" y1="35" x2="60" y2="18"/>
+                                            <line x1="20" y1="35" x2="60" y2="28"/>
+                                            <line x1="20" y1="35" x2="60" y2="38"/>
+                                        </g>
+
+                                        <!-- Interconnecting Synapses Layer 2 to Layer 3 -->
+                                        <g stroke="url(#synL2L3)" stroke-width="0.85" opacity="0.45" class="synapse-mesh">
+                                            <line x1="60" y1="8" x2="100" y2="16"/>
+                                            <line x1="60" y1="8" x2="100" y2="32"/>
+
+                                            <line x1="60" y1="18" x2="100" y2="16"/>
+                                            <line x1="60" y1="18" x2="100" y2="32"/>
+
+                                            <line x1="60" y1="28" x2="100" y2="16"/>
+                                            <line x1="60" y1="28" x2="100" y2="32"/>
+
+                                            <line x1="60" y1="38" x2="100" y2="16"/>
+                                            <line x1="60" y1="38" x2="100" y2="32"/>
+                                        </g>
+
+                                        <!-- Animated Synaptic Transmission Pulses -->
+                                        <circle r="1.6" fill="#FFFFFF" filter="url(#neuronGlow)">
+                                            <animateMotion path="M 20 11 L 60 18 L 100 16" dur="1.7s" repeatCount="indefinite"/>
+                                        </circle>
+                                        <circle r="1.6" fill="#39FF88" filter="url(#neuronGlow)">
+                                            <animateMotion path="M 20 23 L 60 28 L 100 32" dur="2.1s" begin="0.5s" repeatCount="indefinite"/>
+                                        </circle>
+                                        <circle r="1.5" fill="#80FFD0" filter="url(#neuronGlow)">
+                                            <animateMotion path="M 20 35 L 60 18 L 100 16" dur="2.4s" begin="1.0s" repeatCount="indefinite"/>
+                                        </circle>
+                                        <circle r="1.5" fill="#38BDF8" filter="url(#neuronGlow)">
+                                            <animateMotion path="M 20 11 L 60 38 L 100 32" dur="1.9s" begin="1.4s" repeatCount="indefinite"/>
+                                        </circle>
+
+                                        <!-- Layer 1 Nodes (Input: 3 Neurons) -->
+                                        <g>
+                                            <circle cx="20" cy="11" r="4.2" fill="#38BDF8" opacity="0.32" filter="url(#nodeHalo)" class="neuron-halo l1"/>
+                                            <circle cx="20" cy="11" r="2.3" fill="#E0F2FE" stroke="#38BDF8" stroke-width="1.1"/>
+
+                                            <circle cx="20" cy="23" r="4.2" fill="#38BDF8" opacity="0.32" filter="url(#nodeHalo)" class="neuron-halo l1"/>
+                                            <circle cx="20" cy="23" r="2.3" fill="#E0F2FE" stroke="#38BDF8" stroke-width="1.1"/>
+
+                                            <circle cx="20" cy="35" r="4.2" fill="#38BDF8" opacity="0.32" filter="url(#nodeHalo)" class="neuron-halo l1"/>
+                                            <circle cx="20" cy="35" r="2.3" fill="#E0F2FE" stroke="#38BDF8" stroke-width="1.1"/>
+                                        </g>
+
+                                        <!-- Layer 2 Nodes (Hidden: 4 Neurons) -->
+                                        <g>
+                                            <circle cx="60" cy="8" r="4.4" fill="#39FF88" opacity="0.36" filter="url(#nodeHalo)" class="neuron-halo l2"/>
+                                            <circle cx="60" cy="8" r="2.5" fill="#F0FDF4" stroke="#39FF88" stroke-width="1.1"/>
+
+                                            <circle cx="60" cy="18" r="4.4" fill="#39FF88" opacity="0.36" filter="url(#nodeHalo)" class="neuron-halo l2"/>
+                                            <circle cx="60" cy="18" r="2.5" fill="#F0FDF4" stroke="#39FF88" stroke-width="1.1"/>
+
+                                            <circle cx="60" cy="28" r="4.4" fill="#39FF88" opacity="0.36" filter="url(#nodeHalo)" class="neuron-halo l2"/>
+                                            <circle cx="60" cy="28" r="2.5" fill="#F0FDF4" stroke="#39FF88" stroke-width="1.1"/>
+
+                                            <circle cx="60" cy="38" r="4.4" fill="#39FF88" opacity="0.36" filter="url(#nodeHalo)" class="neuron-halo l2"/>
+                                            <circle cx="60" cy="38" r="2.5" fill="#F0FDF4" stroke="#39FF88" stroke-width="1.1"/>
+                                        </g>
+
+                                        <!-- Layer 3 Nodes (Output: 2 Neurons) -->
+                                        <g>
+                                            <circle cx="100" cy="16" r="4.6" fill="#80FFD0" opacity="0.4" filter="url(#nodeHalo)" class="neuron-halo l3"/>
+                                            <circle cx="100" cy="16" r="2.7" fill="#FFFFFF" stroke="#80FFD0" stroke-width="1.3"/>
+
+                                            <circle cx="100" cy="32" r="4.6" fill="#80FFD0" opacity="0.4" filter="url(#nodeHalo)" class="neuron-halo l3"/>
+                                            <circle cx="100" cy="32" r="2.7" fill="#FFFFFF" stroke="#80FFD0" stroke-width="1.3"/>
+                                        </g>
+                                    </svg>
+                                </div>
+                                <div class="step-title">THE NEURONS (DNN)</div>
+                                <div class="step-sub text-muted">Multi-layer Classification</div>
+                                <div class="step-status text-emerald" id="pipe-t3-val">BENIGN_NORMAL (98.7%)</div>
+                            </div>
+
+                            <!-- Animated Glowing Connector Arrow 4 -> 5 -->
+                            <div class="pipe-arrow glowing-connector-arrow">
+                                <svg viewBox="0 0 32 18" width="28" height="16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M 2 9 L 24 9 M 18 3 L 24 9 L 18 15" stroke="#39FF88" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" filter="drop-shadow(0 0 5px #39FF88)"/>
+                                    <circle r="2.2" fill="#FFFFFF" filter="drop-shadow(0 0 4px #39FF88)">
+                                        <animateMotion path="M 2 9 L 24 9" dur="1.1s" begin="0.75s" repeatCount="indefinite"/>
+                                    </circle>
+                                </svg>
+                            </div>
+
+                            <!-- Step 5: Decision & Response -->
+                            <div class="pipe-step pipe-decision-box" id="step-t4">
+                                <div class="step-badge">5</div>
+                                <div class="step-icon step-glowing-icon text-emerald" title="Autonomous Tri-State Defense Fortress (Forward / Jail / Quarantine)">
+                                    <svg viewBox="0 0 72 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <defs>
+                                            <filter id="respGlow" x="-30%" y="-30%" width="160%" height="160%">
+                                                <feGaussianBlur stdDeviation="2.2" result="b5"/>
+                                                <feMerge><feMergeNode in="b5"/><feMergeNode in="SourceGraphic"/></feMerge>
+                                            </filter>
+                                        </defs>
+
+                                        <!-- Outer Pulsing Forcefield Energy Barrier -->
+                                        <path d="M 36 6 L 56 14 C 56 28 47 38 36 43 C 25 38 16 28 16 14 Z" fill="rgba(16, 185, 129, 0.12)" stroke="#10B981" stroke-width="1.4" filter="url(#respGlow)"/>
+
+                                        <!-- Inner Energy Fortress Mesh -->
+                                        <path d="M 36 11 L 51 17 C 51 28 44 35 36 39 C 28 35 21 28 21 17 Z" stroke="rgba(57, 255, 136, 0.45)" stroke-width="1" stroke-dasharray="2 1.5"/>
+
+                                        <!-- Defensive Forcefield Expanding Wave -->
+                                        <path d="M 36 6 L 56 14 C 56 28 47 38 36 43 C 25 38 16 28 16 14 Z" stroke="#39FF88" stroke-width="1.8" fill="none" opacity="0">
+                                            <animate attributeName="opacity" values="0.8;0" dur="2s" repeatCount="indefinite"/>
+                                            <animate attributeName="transform" type="scale" values="1;1.12" origin="36 24" dur="2s" repeatCount="indefinite"/>
+                                        </path>
+
+                                        <!-- Tri-State Status Dots (Green Forward / Red Jail / Amber Quarantine) -->
+                                        <circle cx="27" cy="22" r="2" fill="#10B981" filter="url(#respGlow)"/>
+                                        <circle cx="36" cy="18" r="2.4" fill="#39FF88" filter="url(#respGlow)"/>
+                                        <circle cx="45" cy="22" r="2" fill="#EF4444" filter="url(#respGlow)"/>
+
+                                        <!-- Autonomous Action Lock / Checkmark Crest -->
+                                        <path d="M 28 26 L 33 31 L 44 20" stroke="#FFFFFF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" filter="url(#respGlow)"/>
+                                    </svg>
+                                </div>
+                                <div class="step-title">DECISION & RESPONSE</div>
+                                <div class="step-sub text-muted">Forward / Block / Quarantine</div>
+                                <div class="decision-badge" id="pipe-t4-val">FORWARDED</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bottom Right: Dynamic Firewall Blocklist -->
+                    <div class="panel-box blocklist-card" id="section-blocklist">
+                        <div class="panel-header-bar">
+                            <div class="title-with-icon">
+                                <div class="badge-icon-shield">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="#38BDF8" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                                </div>
+                                <div>
+                                    <h3>DYNAMIC FIREWALL BLOCKLIST (1-2 MINUTE AUTONOMOUS COOLDOWN)</h3>
+                                    <p>Attacker source IPs are automatically blacklisted from the network for 60-120 seconds.</p>
+                                </div>
+                            </div>
+                            <span class="badge-pill-crimson" id="blocklist-count-badge">0 IP JAILED</span>
+                        </div>
+
+                        <div class="table-scroll-wrap max-h-130">
+                            <table class="styled-table" id="blocklist-table">
+                                <thead>
+                                    <tr>
+                                        <th>ATTACKER IP</th>
+                                        <th>REASON</th>
+                                        <th>REMAINING JAIL TIME</th>
+                                        <th>ACTION</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="blocklist-body">
+                                    <tr>
+                                        <td colspan="4" class="empty-state-cell">
+                                            <div class="empty-state">
+                                                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#64748B" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
+                                                <span>No active firewall blocks currently active.</span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- =============================================================== -->
+            <!-- ROW 3: LIVE INCIDENT STREAM & FORENSIC INVESTIGATION LOGS       -->
+            <!-- =============================================================== -->
+            <section class="panel-box incidents-panel" id="section-incidents">
+                <div class="panel-header-bar flex-between">
+                    <div class="title-with-dot">
+                        <span class="red-recording-dot"></span>
+                        <h3>LIVE INCIDENT STREAM & FORENSIC INVESTIGATION LOGS</h3>
+                    </div>
+
+                    <!-- Right Controls (Filter, Search, Dropdown) -->
+                    <div class="incident-toolbar">
+                        <div class="live-ticker-badge">
+                            <span class="dot-green"></span> LIVE TICKER
+                        </div>
+
+                        <div class="select-wrap">
+                            <select id="subnet-filter-select" onchange="filterIncidents()">
+                                <option value="ALL">All Subnets</option>
+                                <option value="Lab-1">Lab-1 Subnet</option>
+                                <option value="Lab-2">Lab-2 Subnet</option>
+                                <option value="Lab-3">Lab-3 Subnet</option>
+                                <option value="External_WAN">External WAN</option>
+                            </select>
+                        </div>
+
+                        <div class="search-input-wrap">
+                            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#64748B" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                            <input type="text" id="incident-search-input" placeholder="Search IP, event, or type..." oninput="filterIncidents()">
+                        </div>
+
+                        <button class="filter-action-btn" title="Filter Settings">
+                            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Incident Stream Table -->
+                <div class="table-scroll-wrap max-h-240">
+                    <table class="styled-table" id="incidents-table">
+                        <thead>
+                            <tr>
+                                <th>TIME</th>
+                                <th>SUBNET</th>
+                                <th>SOURCE IP</th>
+                                <th>DESTINATION</th>
+                                <th>TIER 1 (SURICATA/SNORT)</th>
+                                <th>TIER 2 AGENT</th>
+                                <th>TIER 3 NEURONS</th>
+                                <th>TIER 4 ACTION</th>
+                                <th>FORENSICS</th>
+                            </tr>
+                        </thead>
+                        <tbody id="incidents-body">
+                            <!-- Populated dynamically via WebSocket -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- =============================================================== -->
+            <!-- ROW 4: FORENSICS INVESTIGATION & PCAP INSPECTOR                 -->
+            <!-- =============================================================== -->
+            <section class="panel-box forensics-panel" id="section-forensics">
+                <div class="panel-header-bar flex-between">
+                    <div class="title-with-icon">
+                        <div class="badge-icon-blue">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="#38BDF8" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                        </div>
+                        <div>
+                            <h3>ACTIVE FORENSICS &amp; DEEP PACKET PAYLOAD INSPECTOR</h3>
+                            <p>Sub-millisecond wire-speed packet capture analysis, hex/ASCII disassembly, and Wireshark PCAP export</p>
+                        </div>
+                    </div>
+                    <div class="forensic-meta-badges">
+                        <span class="badge-pill-cyan">TAP: SPAN MIRROR 10G</span>
+                        <span class="badge-pill-emerald" id="forensic-buffer-badge">RING BUFFER: 512 KB</span>
+                    </div>
+                </div>
+
+                <div class="forensics-content-grid">
+                    <!-- Left: Recent Suspicious Frames Stream -->
+                    <div class="forensic-subpanel">
+                        <div class="subpanel-title flex-between">
+                            <span>CAPTURED ANOMALOUS FRAMES</span>
+                            <span class="text-muted" style="font-size:11px;">Select frame to inspect</span>
+                        </div>
+                        <div class="forensic-frames-list" id="forensic-frames-list">
+                            <div class="forensic-frame-item active" onclick="selectForensicFrame(0, this)">
+                                <div class="frame-item-top">
+                                    <span class="text-crimson font-bold">FRAME #1042</span>
+                                    <span class="badge-pill-crimson">PORT SCAN</span>
+                                </div>
+                                <div class="frame-item-sub">192.168.10.150:49210 ➔ 145.3.21.66:23 (TELNET)</div>
+                                <div class="frame-item-meta">Tiny SYN (40B) | 15+ Target Ports Dispersed</div>
+                            </div>
+                            <div class="forensic-frame-item" onclick="selectForensicFrame(1, this)">
+                                <div class="frame-item-top">
+                                    <span class="text-crimson font-bold">FRAME #1038</span>
+                                    <span class="badge-pill-crimson">SYN FLOOD</span>
+                                </div>
+                                <div class="frame-item-sub">172.16.0.44:38192 ➔ 145.3.21.80:80 (HTTP)</div>
+                                <div class="frame-item-meta">Bursty SYN flood rate (2800 pkt/s) | Jailed for 90s</div>
+                            </div>
+                            <div class="forensic-frame-item" onclick="selectForensicFrame(2, this)">
+                                <div class="frame-item-top">
+                                    <span class="text-amber font-bold">FRAME #1029</span>
+                                    <span class="badge-pill-amber">CVE-2023-44487</span>
+                                </div>
+                                <div class="frame-item-sub">10.0.12.88:51200 ➔ 145.3.21.44:443 (HTTPS)</div>
+                                <div class="frame-item-meta">HTTP/2 Rapid Reset Exploit Signature Matched</div>
+                            </div>
+                            <div class="forensic-frame-item" onclick="selectForensicFrame(3, this)">
+                                <div class="frame-item-top">
+                                    <span class="text-teal font-bold">FRAME #1015</span>
+                                    <span class="badge-pill-teal">HEAVY TRANSFER</span>
+                                </div>
+                                <div class="frame-item-sub">192.168.1.55:443 ➔ 145.3.21.10:443 (TLS STREAM)</div>
+                                <div class="frame-item-meta">Full 1460B MTU | Single Port (Preserved - 0 False Drop)</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right: Hex/ASCII Disassembler & Protocol Decoding -->
+                    <div class="forensic-subpanel">
+                        <div class="subpanel-title flex-between">
+                            <span id="forensic-payload-title">FRAME #1042 DEEP PACKET DISSECTION</span>
+                            <a id="forensic-export-btn" href="/api/export_pcap/1" class="btn btn-outline btn-xs" download>📥 Export .pcap</a>
+                        </div>
+                        <div class="forensic-protocol-tags" id="forensic-protocol-tags">
+                            <span class="proto-tag">ETHERNET II</span>
+                            <span class="proto-tag">IPv4 [TTL 64]</span>
+                            <span class="proto-tag">TCP [SYN, ECN]</span>
+                            <span class="proto-tag alert">ANOMALY: EMPTY PORT PROBE</span>
+                        </div>
+                        <div class="hex-box" id="forensic-hex-viewer">0000   00 0c 29 12 34 56 00 0c 29 ab cd ef 08 00 45 00   ..).4V..).....E.
+0010   00 3c 1a 2b 40 00 40 06 b8 1f c6 33 64 2a c0 a8   .<.+@.@....3d*..
+0020   0a 37 c3 50 00 87 00 00 00 00 a0 02 72 10 3a 4f   .7.P........r.:O
+0030   00 00 02 04 05 b4 04 02 08 0a 00 23 b1 c2 00 00   ...........#....</div>
+                        <div class="forensic-actions-row">
+                            <button class="btn btn-primary btn-sm" onclick="openCurrentForensicModal()">Inspect in Full Modal</button>
+                            <button class="btn btn-outline btn-sm" onclick="captureLiveBufferPacket()">Capture Fresh SPAN Frame</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- =============================================================== -->
+            <!-- ROW 5: AI AGENT & MULTI-LAYER NEURONS (DNN) INTELLIGENCE        -->
+            <!-- =============================================================== -->
+            <section class="panel-box ai-panel" id="section-ai-analysis">
+                <div class="panel-header-bar flex-between">
+                    <div class="title-with-icon">
+                        <div class="badge-icon-blue">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="#38BDF8" stroke-width="2"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 4.44-2.04z"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-4.44-2.04z"/></svg>
+                        </div>
+                        <div>
+                            <h3>SENTINEL AI AGENT &amp; MULTI-LAYER NEURONS (DNN) INTELLIGENCE</h3>
+                            <p>CIC-IDS2017 10-feature flow aggregation &amp; deep multi-layer neural network inference engine</p>
+                        </div>
+                    </div>
+                    <div class="forensic-meta-badges">
+                        <span class="badge-pill-emerald">DNN INFERENCE: &lt; 0.2ms</span>
+                        <span class="badge-pill-teal">WEIGHTS: LOADED (5 CLASSES)</span>
+                    </div>
+                </div>
+
+                <div class="ai-analysis-grid">
+                    <!-- Tier 2 Agent Flow Profiler -->
+                    <div class="ai-subpanel">
+                        <div class="subpanel-title flex-between">
+                            <span>TIER 2: SENTINEL AI AGENT (FLOW PROFILER)</span>
+                            <span class="text-teal font-mono" id="ai-active-agent-score">Score: 0.05 (Clean)</span>
+                        </div>
+                        <p class="text-muted" style="font-size:12px; margin-bottom:14px;">
+                            Extracts 10 flow features in real-time. Crucially distinguishes Genuine Heavy File Transfers (Single Port, 1460B MTU) from Hacker Port Scans (15+ Empty Ports, Tiny Frames).
+                        </p>
+                        <div class="ai-features-grid">
+                            <div class="ai-feature-card">
+                                <span class="feat-name">Port Dispersion Ratio</span>
+                                <strong class="feat-val text-white" id="feat-dispersion">1.0 (Single Port)</strong>
+                                <span class="feat-sub text-emerald">Genuine Safe Traffic</span>
+                            </div>
+                            <div class="ai-feature-card">
+                                <span class="feat-name">Payload Byte Entropy</span>
+                                <strong class="feat-val text-white" id="feat-entropy">7.84 bits/byte</strong>
+                                <span class="feat-sub text-cyan">Encrypted TLS / SSH</span>
+                            </div>
+                            <div class="ai-feature-card">
+                                <span class="feat-name">SYN / ACK Ratio</span>
+                                <strong class="feat-val text-white" id="feat-synack">1.02 (Balanced)</strong>
+                                <span class="feat-sub text-emerald">Healthy Handshakes</span>
+                            </div>
+                            <div class="ai-feature-card">
+                                <span class="feat-name">Inter-Arrival Time</span>
+                                <strong class="feat-val text-white" id="feat-iat">0.14 ms</strong>
+                                <span class="feat-sub text-teal">Wire Speed Ingress</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tier 3 Neurons DNN Classifier -->
+                    <div class="ai-subpanel">
+                        <div class="subpanel-title flex-between">
+                            <span>TIER 3: THE NEURONS (MULTI-LAYER DNN)</span>
+                            <span class="text-emerald font-mono">Input 10 ➔ 32 ➔ 16 ➔ 5</span>
+                        </div>
+                        <p class="text-muted" style="font-size:12px; margin-bottom:14px;">
+                            Softmax probability distribution computed over the current packet stream:
+                        </p>
+                        <div class="dnn-bars-container">
+                            <div class="dnn-bar-row">
+                                <div class="dnn-bar-label flex-between">
+                                    <span>BENIGN_NORMAL</span>
+                                    <strong class="text-emerald" id="prob-benign">98.4%</strong>
+                                </div>
+                                <div class="dnn-bar-track"><div class="dnn-bar-fill bg-emerald" id="bar-benign" style="width: 98.4%;"></div></div>
+                            </div>
+                            <div class="dnn-bar-row">
+                                <div class="dnn-bar-label flex-between">
+                                    <span>GENUINE_HEAVY_TRANSFER</span>
+                                    <strong class="text-teal" id="prob-heavy">1.1%</strong>
+                                </div>
+                                <div class="dnn-bar-track"><div class="dnn-bar-fill bg-teal" id="bar-heavy" style="width: 1.1%;"></div></div>
+                            </div>
+                            <div class="dnn-bar-row">
+                                <div class="dnn-bar-label flex-between">
+                                    <span>EMPTY_PORT_SCAN</span>
+                                    <strong class="text-crimson" id="prob-scan">0.3%</strong>
+                                </div>
+                                <div class="dnn-bar-track"><div class="dnn-bar-fill bg-crimson" id="bar-scan" style="width: 0.3%;"></div></div>
+                            </div>
+                            <div class="dnn-bar-row">
+                                <div class="dnn-bar-label flex-between">
+                                    <span>DDOS_SYN_FLOOD</span>
+                                    <strong class="text-crimson" id="prob-ddos">0.1%</strong>
+                                </div>
+                                <div class="dnn-bar-track"><div class="dnn-bar-fill bg-crimson" id="bar-ddos" style="width: 0.1%;"></div></div>
+                            </div>
+                            <div class="dnn-bar-row">
+                                <div class="dnn-bar-label flex-between">
+                                    <span>EXPLOIT_PAYLOAD (CVE)</span>
+                                    <strong class="text-amber" id="prob-exploit">0.1%</strong>
+                                </div>
+                                <div class="dnn-bar-track"><div class="dnn-bar-fill bg-amber" id="bar-exploit" style="width: 0.1%;"></div></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- =============================================================== -->
+            <!-- ROW 6: SOC EXECUTIVE REPORTS & AUDIT                            -->
+            <!-- =============================================================== -->
+            <section class="panel-box reports-panel" id="section-reports">
+                <div class="panel-header-bar flex-between">
+                    <div class="title-with-icon">
+                        <div class="badge-icon-blue">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="#38BDF8" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+                        </div>
+                        <div>
+                            <h3>EDGE SOC EXECUTIVE AUDIT &amp; TELEMETRY REPORTS</h3>
+                            <p>Autonomous edge security posture, false-positive verification, and verifiable forensics audit records</p>
+                        </div>
+                    </div>
+                    <div class="report-action-buttons">
+                        <button class="btn btn-outline btn-sm" onclick="exportIncidentsCSV()">📊 Export CSV</button>
+                        <button class="btn btn-primary btn-sm" onclick="printSOCReport()">🖨️ Print / Save Report</button>
+                    </div>
+                </div>
+
+                <div class="reports-stats-grid">
+                    <div class="report-kpi-card">
+                        <div class="report-kpi-title">FALSE POSITIVE RATE</div>
+                        <div class="report-kpi-val text-emerald">0.00%</div>
+                        <div class="report-kpi-sub">Dual-tier flow verification ensures zero benign file transfer interruption</div>
+                    </div>
+                    <div class="report-kpi-card">
+                        <div class="report-kpi-title">ATTACK JAIL SUCCESS</div>
+                        <div class="report-kpi-val text-crimson">100.0%</div>
+                        <div class="report-kpi-sub">All malicious port scans &amp; floods blocked autonomously within 1 packet</div>
+                    </div>
+                    <div class="report-kpi-card">
+                        <div class="report-kpi-title">AVERAGE INSPECTION LATENCY</div>
+                        <div class="report-kpi-val text-cyan" id="report-latency-val">0.32 ms</div>
+                        <div class="report-kpi-sub">Sub-millisecond wire overhead on standard enterprise router edge tap</div>
+                    </div>
+                    <div class="report-kpi-card">
+                        <div class="report-kpi-title">EDGE HARDWARE EFFICIENCY</div>
+                        <div class="report-kpi-val text-teal">37.4 MB RAM</div>
+                        <div class="report-kpi-sub">CPU &lt; 5% average load | Suitable for low-cost edge routers &amp; micro-gateways</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- =============================================================== -->
+            <!-- ROW 7: ENGINE CONFIGURATION & SETTINGS                          -->
+            <!-- =============================================================== -->
+            <section class="panel-box settings-panel" id="section-settings">
+                <div class="panel-header-bar flex-between">
+                    <div class="title-with-icon">
+                        <div class="badge-icon-blue">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="#38BDF8" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                        </div>
+                        <div>
+                            <h3>SENTINEL EDGE ENGINE CONFIGURATION &amp; DETECTION THRESHOLDS</h3>
+                            <p>Customize autonomous tri-state response policies, firewall cooldown timers, and network TAP interfaces</p>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary btn-sm" onclick="saveEdgeSettings()">💾 Save Changes</button>
+                </div>
+
+                <div class="settings-form-grid">
+                    <div class="setting-item-card">
+                        <div class="setting-header">
+                            <strong>Autonomous Tri-State Defense</strong>
+                            <label class="switch">
+                                <input type="checkbox" id="setting-auto-jail" checked>
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                        <p class="text-muted" style="font-size:12px;">When enabled, malicious attacker IPs are immediately jailed in dynamic firewall table.</p>
+                    </div>
+
+                    <div class="setting-item-card">
+                        <div class="setting-header">
+                            <strong>Dynamic Firewall Jail Cooldown</strong>
+                            <span class="text-cyan font-mono" id="setting-jail-val">90 seconds</span>
+                        </div>
+                        <input type="range" min="30" max="300" step="15" value="90" id="setting-jail-range" oninput="document.getElementById('setting-jail-val').innerText = this.value + ' seconds'" style="width:100%; accent-color: var(--accent-emerald);">
+                        <p class="text-muted" style="font-size:12px; margin-top:4px;">Autonomous quarantine duration before IP is cleanly unjailed.</p>
+                    </div>
+
+                    <div class="setting-item-card">
+                        <div class="setting-header">
+                            <strong>Fast-Path Wire Filter (Tier 1)</strong>
+                            <label class="switch">
+                                <input type="checkbox" id="setting-t1-rules" checked>
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                        <p class="text-muted" style="font-size:12px;">Suricata &amp; Snort rule matching (.rules) with fast-drop wire acceleration.</p>
+                    </div>
+
+                    <div class="setting-item-card">
+                        <div class="setting-header">
+                            <strong>AI Anomaly Sensitivity Threshold</strong>
+                            <select id="setting-ai-sensitivity" class="styled-select" style="background:#091A13; color:#E8F5EE; border:1px solid #245640; border-radius:6px; padding:4px 8px;">
+                                <option value="0.85">Conservative (0.85)</option>
+                                <option value="0.70" selected>Balanced (0.70 - Recommended)</option>
+                                <option value="0.50">Aggressive (0.50)</option>
+                            </select>
+                        </div>
+                        <p class="text-muted" style="font-size:12px;">Sensitivity of Tier 2 agent flow clustering for unusual port behaviors.</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- =================================================================== -->
+    <!-- FORENSIC PACKET INSPECTION MODAL                                    -->
+    <!-- =================================================================== -->
+    <div class="modal" id="forensic-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>INCIDENT FORENSIC PACKET INSPECTOR</h3>
+                <button class="modal-close" onclick="closeModal()">×</button>
+            </div>
+            <div class="modal-body" id="modal-details">
+                <!-- Populated via JS -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeModal()">Close</button>
+                <a id="btn-download-pcap" href="#" class="btn btn-primary" download>📥 Export Wireshark .pcap</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="toast-notification" class="toast-notification"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>
