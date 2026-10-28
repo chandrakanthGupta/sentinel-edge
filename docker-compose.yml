@@ -12,3 +12,4 @@ services:
       - PORT=8000
     volumes:
       - ./tier4_response/sentinel_incidents.db:/app/tier4_response/sentinel_incidents.db
+

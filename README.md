@@ -7,20 +7,31 @@
 
 ## 🚀 1-Minute Quick Start
 
-To launch the SentinelEdge engine and open the real-time SOC dashboard:
-
+### Local Execution
 ```bash
-# 1. Navigate to the project directory
-cd "C:\Users\sivas\Desktop\anti2"
-# or
-cd "C:\Users\sivas\Desktop\innosprit hacktoon"
+# 1. Clone the repository
+git clone https://github.com/chandrakanthGupta/sentinel-edge.git
+cd sentinel-edge
 
-# 2. Run the main executable
+# 2. Install dependencies
+pip install -r requirements.txt
+
+# 3. Launch SentinelEdge engine & dashboard
 python main.py
 ```
+Open your browser at: 👉 **`http://127.0.0.1:8000`**
 
-Now open your web browser at:
-👉 **`http://127.0.0.1:8000`**
+### Docker Execution
+```bash
+docker compose up -d --build
+```
+Open your browser at: 👉 **`http://localhost:8000`**
+
+### Cloud Deployment (Render / Railway)
+- **Repository**: `https://github.com/chandrakanthGupta/sentinel-edge`
+- **Build Command**: `pip install -r requirements.txt`
+- **Start Command**: `python main.py`
+- **Port**: `8000` (auto-detected via `$PORT`)
 
 ---
 

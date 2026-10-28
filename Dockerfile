@@ -29,3 +29,4 @@ HEALTHCHECK --interval=30s --timeout=5s --start-period=5s --retries=3 \
 
 # Launch SentinelEdge
 CMD ["python", "main.py"]
+
